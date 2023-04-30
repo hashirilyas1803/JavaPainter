@@ -1,17 +1,18 @@
 package Default;
 
+import Buttons.*;
 import Buttons.Button;
-import Buttons.ColorButton;
-import Buttons.ToggleButton;
 import Interfaces.DrawButtons;
 import Interfaces.Interactibility;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
 public class ToolBar extends Rectangle implements Interactibility, DrawButtons {
     Board b;
     ArrayList<Button> buttons;
+    ColorButton selected;
     public ToolBar(int x, int y, int width, int height, Color rectColor, Color lineColor, int stroke, Board b) {
         super(x, y, width, height, rectColor, lineColor, stroke);
         this.b = b;
@@ -23,7 +24,7 @@ public class ToolBar extends Rectangle implements Interactibility, DrawButtons {
         super.paint(g);
         if (!buttons.isEmpty()) {
             for (Button button : buttons) {
-                if (button instanceof ColorButton)
+                if (button instanceof ColorButton || button instanceof PaletteButton)
                     button.paint(g);
                 else
                     drawButton(button, g, b);
@@ -42,10 +43,29 @@ public class ToolBar extends Rectangle implements Interactibility, DrawButtons {
             if(buttons.get(i).IsClicked(x, y)) {
                 if (buttons.get(i) instanceof ToggleButton) {
                     buttons.get(i).click(x, y);
+                    if (buttons.get(i) instanceof ColorButton)
+                        selected = (ColorButton) buttons.get(i);
                     for (int j = 0; j < buttons.size(); j++) {
-                        if (i != j) ((ToggleButton) buttons.get(j)).Unclick(x, y);
+                        if (i != j && buttons.get(j) instanceof ToggleButton) ((ToggleButton) buttons.get(j)).Unclick(x, y);
                     }
                 }
+            }
+        }
+    }
+
+    public void press(int x, int y) {
+        for (Button button : buttons) {
+            if (button instanceof PaletteButton && button.IsClicked(x, y)) {
+                button.press(x, y);
+                if (selected != null)
+                    selected.setColorRect(button.getRectColor());
+            }
+        }
+    }
+    public void release(int x, int y) {
+        for (Button button : buttons) {
+            if (button instanceof PaletteButton && button.IsClicked(x, y)) {
+                button.release(x, y);
             }
         }
     }
@@ -57,5 +77,25 @@ public class ToolBar extends Rectangle implements Interactibility, DrawButtons {
                 return true;
         }
         return false;
+    }
+
+    public void addShapes(int x, int y, int size, int height) {
+        buttons.add(new ToggleButton(x, y, size, size, new ImageIcon("src/resources/right_triangle_button.png").getImage(), new ImageIcon("src/resources/right_triangle_button_pressed.png").getImage()));
+        buttons.add(new ToggleButton(x + height, y, size, size, new ImageIcon("src/resources/equilateral_triangle_button.png").getImage(), new ImageIcon("src/resources/equilateral_triangle_button_pressed.png").getImage()));
+        buttons.add(new ToggleButton(x + (height* 2), y, size, size, new ImageIcon("src/resources/rectangle_button.png").getImage(), new ImageIcon("src/resources/rectangle_button_pressed.png").getImage()));
+        buttons.add(new ToggleButton(x, y + height, size, size, new ImageIcon("src/resources/circle_button.png").getImage(), new ImageIcon("src/resources/circle_button_pressed.png").getImage()));
+        buttons.add(new ToggleButton(x + height, y + height, size, size, new ImageIcon("src/resources/hexagon_button.png").getImage(), new ImageIcon("src/resources/hexagon_button_pressed.png").getImage()));
+        buttons.add(new ToggleButton(x + (height* 2), y + height, size, size, new ImageIcon("src/resources/pentagram_button.png").getImage(), new ImageIcon("src/resources/pentagram_button_pressed.png").getImage()));
+    }
+
+    public void addPaletteButtons(int x, int y, int size, int num) {
+        // Populate array of colors to iteratively assign to palette buttons
+        Color[] colors = {Color.BLACK, Color.gray, Color.RED, Color.ORANGE, Color.PINK, Color.WHITE, Color.YELLOW, Color.GREEN, Color.CYAN, Color.BLUE};
+
+        // Iterative assign an a grid of colors
+        int j = num / 2;
+        for (int i = 0; i < num; i++) {
+            buttons.add(new PaletteButton(x + ((i % j) * size), y + ((i / j) * size), size, colors[i]));
+        }
     }
 }

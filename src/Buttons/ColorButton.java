@@ -15,8 +15,8 @@ public class ColorButton extends ToggleButton implements Interactibility {
     }
 
 
-    public void setColorRect(Rectangle colorRect) {
-        this.colorRect = colorRect;
+    public void setColorRect(Color colorRect) {
+        this.colorRect.setRectColor(colorRect);
     }
 
     @Override

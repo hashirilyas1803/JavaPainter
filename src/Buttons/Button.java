@@ -62,9 +62,19 @@ public class Button implements Interactibility
 	public boolean IsClicked(int x, int y) {
 		if(x > this.x && x < this.x + width && y > this.y && y < this.y + height)
 		{
-			pressed = true;
+			return true;
 		}
-		return pressed;
+		return false;
+	}
+
+	@Override
+	public void press(int x, int y) {
+
+	}
+
+	@Override
+	public void release(int x, int y) {
+
 	}
 
 	public boolean IsReleased(int x, int y) {

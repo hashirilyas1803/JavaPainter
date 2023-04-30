@@ -1,6 +1,8 @@
 package Default;
 
+import Buttons.ActiveButton;
 import Buttons.ColorButton;
+import Buttons.PaletteButton;
 import Buttons.ToggleButton;
 import Interfaces.DrawButtons;
 
@@ -37,6 +39,7 @@ public class Board extends JPanel
     private Header header;
     private ToolBar shapes;
     private ToolBar color;
+    private ActiveButton activeButton;
 
     @Override
     public void componentResized(ComponentEvent e) {
@@ -47,10 +50,7 @@ public class Board extends JPanel
 
     @Override
     public void componentMoved(ComponentEvent e) {
-        width = getWidth();
-        height = getHeight();
-        System.out.println(53);
-        InitializeAssets();
+
     }
 
     @Override
@@ -111,23 +111,18 @@ public class Board extends JPanel
         // Adding buttons to the shapes toolbar
         int xtemp = shapes.centre.x + 2;
         int ytemp = shapes.centre.y + shapes.stroke;
-        shapes.buttons.add(new ToggleButton(xtemp, ytemp, 32, 32, new ImageIcon("src/resources/right_triangle_button.png").getImage(), new ImageIcon("src/resources/right_triangle_button_pressed.png").getImage()));
-        shapes.buttons.add(new ToggleButton(xtemp + HEIGHT, ytemp, 32, 32, new ImageIcon("src/resources/equilateral_triangle_button.png").getImage(), new ImageIcon("src/resources/equilateral_triangle_button_pressed.png").getImage()));
-        shapes.buttons.add(new ToggleButton(xtemp + (HEIGHT* 2), ytemp, 32, 32, new ImageIcon("src/resources/rectangle_button.png").getImage(), new ImageIcon("src/resources/rectangle_button_pressed.png").getImage()));
-        shapes.buttons.add(new ToggleButton(xtemp, ytemp + HEIGHT, 32, 32, new ImageIcon("src/resources/circle_button.png").getImage(), new ImageIcon("src/resources/circle_button_pressed.png").getImage()));
-        shapes.buttons.add(new ToggleButton(xtemp + HEIGHT, ytemp + HEIGHT, 32, 32, new ImageIcon("src/resources/hexagon_button.png").getImage(), new ImageIcon("src/resources/hexagon_button_pressed.png").getImage()));
-        shapes.buttons.add(new ToggleButton(xtemp + (HEIGHT* 2), ytemp + HEIGHT, 32, 32, new ImageIcon("src/resources/pentagram_button.png").getImage(), new ImageIcon("src/resources/pentagram_button_pressed.png").getImage()));
+        shapes.addShapes(xtemp, ytemp, 32, HEIGHT);
 
         // Add the color toolbar
-        color = new ToolBar(width / 5, menuBar.centre.y + 16, (HEIGHT * 8) + 4, (HEIGHT * 2) + 4, Color.WHITE,  Color.LIGHT_GRAY, 2, this);
+        color = new ToolBar(width / 5, menuBar.centre.y + 16, (HEIGHT * 8) + 20, (HEIGHT * 2) + 4, Color.WHITE,  Color.LIGHT_GRAY, 2, this);
         menuBar.addToolBar(color);
 
         // Add buttons to the color toolbar
         xtemp = color.centre.x + 2;
         ytemp = color.centre.y + shapes.stroke;
-        color.buttons.add(new ColorButton(xtemp, ytemp, 42, 64, "Line Color"));
-        color.buttons.add(new ColorButton(xtemp + 42, ytemp, 42, 64, "Stroke Color"));
-
+        color.buttons.add(new ColorButton(xtemp, ytemp, 42, 64, "Stroke Color"));
+        color.buttons.add(new ColorButton(xtemp + 42, ytemp, 42, 64, "Fill Color"));
+        color.addPaletteButtons(xtemp + (42 * 2), ytemp, 32, 10);
     }
 
     private void initBoard() {
@@ -209,17 +204,19 @@ public class Board extends JPanel
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		x_init = e.getX();
-		y_init = e.getY();
-		mousePressed = true;
-		start_drawing = true;
+//		x_init = e.getX();
+//		y_init = e.getY();
+//		mousePressed = true;
+//		start_drawing = true;
+        color.press(e.getX(), e.getY());
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		mousePressed = false;
-		start_drawing = false;
+//		mousePressed = false;
+//		start_drawing = false;
+        color.release(e.getX(), e.getY());
 
 	}
 

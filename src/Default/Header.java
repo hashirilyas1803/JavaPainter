@@ -15,6 +15,7 @@ public class Header extends Rectangle implements Interactibility, DrawButtons {
     MenuButton edit;
     DropDownMenu fileMenu;
     DropDownMenu editMenu;
+    Window open;
 
     // Methods
     public Header(int x, int y, int width, int height, Color rectColor, Color lineColor, int stroke, Board b) {
@@ -65,11 +66,24 @@ public class Header extends Rectangle implements Interactibility, DrawButtons {
     public void click(int x, int y) {
         file.click(x, y);
         edit.click(x, y);
+        if (fileMenu.getButtons().get(0).IsClicked(x, y)) {
+
+        }
     }
 
     public boolean IsClicked(int x, int y) {
         if (file.IsClicked(x, y) || edit.IsClicked(x, y))
             return true;
         return false;
+    }
+
+    @Override
+    public void press(int x, int y) {
+
+    }
+
+    @Override
+    public void release(int x, int y) {
+
     }
 }
