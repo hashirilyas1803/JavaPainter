@@ -24,6 +24,10 @@ public class Rectangle {
         this.stroke = stroke;
     }
 
+    public Point getCentre() {
+        return centre;
+    }
+
     public Color getRectColor() {
         return rectColor;
     }

@@ -1,10 +1,8 @@
 package Default;
 
-import Buttons.ActiveButton;
 import Buttons.ColorButton;
-import Buttons.PaletteButton;
-import Buttons.ToggleButton;
 import Interfaces.DrawButtons;
+import Windows.Window;
 
 import javax.swing.*;
 import javax.swing.event.MouseInputListener;
@@ -39,7 +37,7 @@ public class Board extends JPanel
     private Header header;
     private ToolBar shapes;
     private ToolBar color;
-    private ActiveButton activeButton;
+    private ToolBar layers;
 
     @Override
     public void componentResized(ComponentEvent e) {
@@ -96,13 +94,17 @@ public class Board extends JPanel
         initBoard();
     }
 
+    public int getHEIGHT() {
+        return HEIGHT;
+    }
+
     private void InitializeAssets() {
 
         // Initialize the header
         header = new Header(0, 0, this.B_WIDTH, HEIGHT, Color.WHITE, Color.LIGHT_GRAY, 0, this);
 
         // Initialize the Menubar window
-        menuBar = new Window(0, HEIGHT + 2, width, HEIGHT * 3, Color.GRAY, Color.LIGHT_GRAY, 2);
+        menuBar = new Window(0, HEIGHT + 2, width, HEIGHT * 3, Color.WHITE, Color.LIGHT_GRAY, 2);
 
         // Add the shapes toolbar
         shapes = new ToolBar(width/60, menuBar.centre.y + 16, (HEIGHT * 3) + 4, (HEIGHT * 2) + 4, Color.WHITE,Color.LIGHT_GRAY, 2, this);
@@ -111,7 +113,7 @@ public class Board extends JPanel
         // Adding buttons to the shapes toolbar
         int xtemp = shapes.centre.x + 2;
         int ytemp = shapes.centre.y + shapes.stroke;
-        shapes.addShapes(xtemp, ytemp, 32, HEIGHT);
+        shapes.addShapes(xtemp, ytemp, 32);
 
         // Add the color toolbar
         color = new ToolBar(width / 5, menuBar.centre.y + 16, (HEIGHT * 8) + 20, (HEIGHT * 2) + 4, Color.WHITE,  Color.LIGHT_GRAY, 2, this);
@@ -123,6 +125,9 @@ public class Board extends JPanel
         color.buttons.add(new ColorButton(xtemp, ytemp, 42, 64, "Stroke Color"));
         color.buttons.add(new ColorButton(xtemp + 42, ytemp, 42, 64, "Fill Color"));
         color.addPaletteButtons(xtemp + (42 * 2), ytemp, 32, 10);
+
+        // Add a layers toolbar
+        layers = new ToolBar((width * 17) / 20, height / 4, width / 8, (height * 2) / 3, Color.GRAY, Color.LIGHT_GRAY, 2, this);
     }
 
     private void initBoard() {
@@ -146,6 +151,7 @@ public class Board extends JPanel
         super.paintComponent(g);
         menuBar.paint(g);
         header.paint(g);
+        layers.paint(g);
 
         
         if(keyPressed)
@@ -187,9 +193,10 @@ public class Board extends JPanel
     
     public void IsClicked(int x, int y)
     {
-    	if (header.IsClicked(x, y))
-            header.click(x, y);
-        else if (shapes.IsClicked(x, y))
+        header.click(x, y);
+        if (header.IsClicked(x, y))
+            return;
+        if (shapes.IsClicked(x, y))
             shapes.click(x, y);
         else if (color.IsClicked(x, y))
             color.click(x, y);
@@ -209,6 +216,7 @@ public class Board extends JPanel
 //		mousePressed = true;
 //		start_drawing = true;
         color.press(e.getX(), e.getY());
+        header.press(e.getX(), e.getY());
 	}
 
 	@Override
@@ -217,7 +225,7 @@ public class Board extends JPanel
 //		mousePressed = false;
 //		start_drawing = false;
         color.release(e.getX(), e.getY());
-
+        header.release(e.getX(), e.getY());
 	}
 
 	@Override
@@ -244,4 +252,12 @@ public class Board extends JPanel
 		x_final = e.getX() - x_init;
 		y_final = e.getY() - y_init;
 	}
+
+    public int getwidth() {
+        return width;
+    }
+
+    public int getheight() {
+        return height;
+    }
 }

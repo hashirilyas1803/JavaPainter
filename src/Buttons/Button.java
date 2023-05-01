@@ -104,8 +104,10 @@ public class Button implements Interactibility
 
 	@Override
 	public void click(int x, int y) {
-		if (IsClicked(x, y))
+		if (IsClicked(x, y)) {
 			current_image = image_pressed;
+			pressed = true;
+		}
 	}
 
 	public void paint(Graphics g) {

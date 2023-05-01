@@ -17,6 +17,6 @@ public class MenuButton extends Button implements Interactibility {
             super.setCurrent_image(image_depressed);
             super.SetPressed(false);
         }
-        super.IsClicked(x, y);
+        super.click(x, y);
     }
 }

@@ -4,6 +4,7 @@ import Buttons.*;
 import Buttons.Button;
 import Interfaces.DrawButtons;
 import Interfaces.Interactibility;
+import Windows.PopUpWindow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,15 +14,20 @@ public class ToolBar extends Rectangle implements Interactibility, DrawButtons {
     Board b;
     ArrayList<Button> buttons;
     ColorButton selected;
+    PopUpWindow gradient;
     public ToolBar(int x, int y, int width, int height, Color rectColor, Color lineColor, int stroke, Board b) {
         super(x, y, width, height, rectColor, lineColor, stroke);
         this.b = b;
         buttons = new ArrayList<>();
+        int h = b.getheight();
+        int w = b.getwidth();
+        gradient = new PopUpWindow(w / 4, h / 4, w / 2, h / 2, Color.WHITE, Color.LIGHT_GRAY, "Gradient");
     }
 
     @Override
     public void paint(Graphics g) {
         super.paint(g);
+//        gradient.paint(g);
         if (!buttons.isEmpty()) {
             for (Button button : buttons) {
                 if (button instanceof ColorButton || button instanceof PaletteButton)
@@ -79,13 +85,13 @@ public class ToolBar extends Rectangle implements Interactibility, DrawButtons {
         return false;
     }
 
-    public void addShapes(int x, int y, int size, int height) {
+    public void addShapes(int x, int y, int size) {
         buttons.add(new ToggleButton(x, y, size, size, new ImageIcon("src/resources/right_triangle_button.png").getImage(), new ImageIcon("src/resources/right_triangle_button_pressed.png").getImage()));
-        buttons.add(new ToggleButton(x + height, y, size, size, new ImageIcon("src/resources/equilateral_triangle_button.png").getImage(), new ImageIcon("src/resources/equilateral_triangle_button_pressed.png").getImage()));
-        buttons.add(new ToggleButton(x + (height* 2), y, size, size, new ImageIcon("src/resources/rectangle_button.png").getImage(), new ImageIcon("src/resources/rectangle_button_pressed.png").getImage()));
-        buttons.add(new ToggleButton(x, y + height, size, size, new ImageIcon("src/resources/circle_button.png").getImage(), new ImageIcon("src/resources/circle_button_pressed.png").getImage()));
-        buttons.add(new ToggleButton(x + height, y + height, size, size, new ImageIcon("src/resources/hexagon_button.png").getImage(), new ImageIcon("src/resources/hexagon_button_pressed.png").getImage()));
-        buttons.add(new ToggleButton(x + (height* 2), y + height, size, size, new ImageIcon("src/resources/pentagram_button.png").getImage(), new ImageIcon("src/resources/pentagram_button_pressed.png").getImage()));
+        buttons.add(new ToggleButton(x + b.getHEIGHT(), y, size, size, new ImageIcon("src/resources/equilateral_triangle_button.png").getImage(), new ImageIcon("src/resources/equilateral_triangle_button_pressed.png").getImage()));
+        buttons.add(new ToggleButton(x + (b.getHEIGHT() * 2), y, size, size, new ImageIcon("src/resources/rectangle_button.png").getImage(), new ImageIcon("src/resources/rectangle_button_pressed.png").getImage()));
+        buttons.add(new ToggleButton(x, y + b.getHEIGHT(), size, size, new ImageIcon("src/resources/circle_button.png").getImage(), new ImageIcon("src/resources/circle_button_pressed.png").getImage()));
+        buttons.add(new ToggleButton(x + b.getHEIGHT(), y + b.getHEIGHT(), size, size, new ImageIcon("src/resources/hexagon_button.png").getImage(), new ImageIcon("src/resources/hexagon_button_pressed.png").getImage()));
+        buttons.add(new ToggleButton(x + (b.getHEIGHT() * 2), y + b.getHEIGHT(), size, size, new ImageIcon("src/resources/pentagram_button.png").getImage(), new ImageIcon("src/resources/pentagram_button_pressed.png").getImage()));
     }
 
     public void addPaletteButtons(int x, int y, int size, int num) {

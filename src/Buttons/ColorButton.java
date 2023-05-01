@@ -38,6 +38,7 @@ public class ColorButton extends ToggleButton implements Interactibility {
         colorRect.paint(g);
 
         g.setColor(Color.BLACK);
+        g.setFont(new Font("TimesNewRoman", Font.PLAIN, 10));
         String[] text1 = text.split(" ");
         g.drawString(text1[0], x + 5, y + width + 5);
         g.drawString(text1[1], x + 5, y + width + 15);
