@@ -1,6 +1,9 @@
 package Default;
 
+import Buttons.ActiveButton;
 import Buttons.ColorButton;
+import Buttons.GradientButton;
+import Buttons.ToggleButton;
 import Interfaces.DrawButtons;
 import Windows.Window;
 
@@ -125,6 +128,8 @@ public class Board extends JPanel
         color.buttons.add(new ColorButton(xtemp, ytemp, 42, 64, "Stroke Color"));
         color.buttons.add(new ColorButton(xtemp + 42, ytemp, 42, 64, "Fill Color"));
         color.addPaletteButtons(xtemp + (42 * 2), ytemp, 32, 10);
+        xtemp = color.centre.x + color.width - 42;
+        color.buttons.add(new GradientButton(xtemp, ytemp, 42, 64, "Gradient"));
 
         // Add a layers toolbar
         layers = new LayersToolBar((width * 4) / 5, height / 4, width / 5, (height * 2) / 3, Color.GRAY, Color.LIGHT_GRAY, 2, this);

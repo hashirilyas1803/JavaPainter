@@ -77,7 +77,10 @@ public class LayersToolBar extends ToolBar implements DrawButtons {
             buttons.remove(i);
             for (int j = i; j < buttons.size(); j++)
                 buttons.get(j).y += 32;
-            selected = buttons.get(i - 1);
+            if (i > 0)
+                selected = buttons.get(i - 1);
+            else
+                selected = buttons.get(i + 1);
         }
     }
 

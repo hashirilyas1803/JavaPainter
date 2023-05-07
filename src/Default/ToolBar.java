@@ -27,15 +27,19 @@ public class ToolBar extends Rectangle implements Interactibility, DrawButtons {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        gradient.paint(g);
         if (!buttons.isEmpty()) {
             for (Button button : buttons) {
-                if (button instanceof ColorButton || button instanceof PaletteButton)
+                if (button instanceof ColorButton || button instanceof PaletteButton || button instanceof GradientButton)
                     button.paint(g);
                 else
                     drawButton(button, g, b);
             }
         }
+        for (Button button : buttons) {
+            if (button instanceof GradientButton && button.IsPressed())
+                gradient.paint(g);
+        }
+
     }
 
 
