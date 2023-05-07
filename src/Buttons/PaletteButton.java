@@ -10,4 +10,12 @@ public class PaletteButton extends ActiveButton implements Interactibility {
         super(x, y, size, size);
         this.setRectColor(color);
     }
+
+    public void press(int x, int y) {
+        if (super.IsClicked(x, y))
+            this.setLineColor(new Color(255, 255, 255));
+    }
+    public void release(int x, int y) {
+        this.setLineColor(Color.LIGHT_GRAY);
+    }
 }

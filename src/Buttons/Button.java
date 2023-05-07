@@ -69,16 +69,23 @@ public class Button implements Interactibility
 
 	@Override
 	public void press(int x, int y) {
-
+		pressed = true;
 	}
 
 	@Override
 	public void release(int x, int y) {
+		pressed = false;
+	}
 
+	public void Unclick(int x, int y) {
+		current_image = image_depressed;
+		pressed = false;
+		if (image_depressed == null)
+			setLineColor(Color.LIGHT_GRAY);
 	}
 
 	public boolean IsReleased(int x, int y) {
-		if((x > this.x && x < this.x + width && y > this.y && y < this.y + height))
+		if(x > this.x && x < this.x + width && y > this.y && y < this.y + height)
 		{
 			pressed = false;
 			current_image = image_depressed;
@@ -107,6 +114,8 @@ public class Button implements Interactibility
 		if (IsClicked(x, y)) {
 			current_image = image_pressed;
 			pressed = true;
+			if (image_depressed == null || image_pressed == null)
+				setLineColor(Color.BLACK);
 		}
 	}
 

@@ -47,8 +47,11 @@ public class Header extends Rectangle implements Interactibility, DrawButtons {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
+        // Display the file and edit buttons
         drawButton(file, g, b);
         drawButton(edit, g, b);
+
+        // Display the dropdown menus based on which button is pressed
         if (file.IsPressed()) {
             fileMenu.paint(g);
             fileop = true;
@@ -64,6 +67,7 @@ public class Header extends Rectangle implements Interactibility, DrawButtons {
             }
         }
 
+        // Add functionality to each of the buttons in the dropdown menus
         int i = 0;
         for (MenuButton button : fileMenu.getButtons()) {
            if (button.IsPressed() && fileop) {
@@ -81,7 +85,6 @@ public class Header extends Rectangle implements Interactibility, DrawButtons {
            }
            i++;
         }
-
         i = 0;
         for (MenuButton button : editMenu.getButtons()) {
             if (button.IsPressed() && editop) {
@@ -104,19 +107,15 @@ public class Header extends Rectangle implements Interactibility, DrawButtons {
 
     @Override
     public void click(int x, int y) {
+        // Add clicking functionality to all buttons in the header
         file.click(x, y);
         edit.click(x, y);
-        // TODO Add clicking methods for buttons in the dropdown menus
         for (MenuButton button : fileMenu.getButtons()) {
             button.click(x, y);
         }
         for (MenuButton button : editMenu.getButtons()) {
             button.click(x, y);
         }
-    }
-
-    void eventDecider(int i) {
-
     }
 
     public boolean IsClicked(int x, int y) {

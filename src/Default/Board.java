@@ -17,8 +17,8 @@ public class Board extends JPanel
     private final int B_HEIGHT = 800;
     private final int DELAY = 25;
     private final int HEIGHT = 32;
-    private int width;
-    private int height;
+    private int width = B_WIDTH;
+    private int height = B_HEIGHT;
 
     private Timer timer;
     private int key = 0;
@@ -37,7 +37,7 @@ public class Board extends JPanel
     private Header header;
     private ToolBar shapes;
     private ToolBar color;
-    private ToolBar layers;
+    private LayersToolBar layers;
 
     @Override
     public void componentResized(ComponentEvent e) {
@@ -127,7 +127,7 @@ public class Board extends JPanel
         color.addPaletteButtons(xtemp + (42 * 2), ytemp, 32, 10);
 
         // Add a layers toolbar
-        layers = new ToolBar((width * 17) / 20, height / 4, width / 8, (height * 2) / 3, Color.GRAY, Color.LIGHT_GRAY, 2, this);
+        layers = new LayersToolBar((width * 4) / 5, height / 4, width / 5, (height * 2) / 3, Color.GRAY, Color.LIGHT_GRAY, 2, this);
     }
 
     private void initBoard() {
@@ -200,6 +200,7 @@ public class Board extends JPanel
             shapes.click(x, y);
         else if (color.IsClicked(x, y))
             color.click(x, y);
+        layers.click(x, y);
     }
 
 	@Override
@@ -217,6 +218,7 @@ public class Board extends JPanel
 //		start_drawing = true;
         color.press(e.getX(), e.getY());
         header.press(e.getX(), e.getY());
+        layers.press(e.getX(), e.getY());
 	}
 
 	@Override
@@ -226,6 +228,7 @@ public class Board extends JPanel
 //		start_drawing = false;
         color.release(e.getX(), e.getY());
         header.release(e.getX(), e.getY());
+        layers.release(e.getX(), e.getY());
 	}
 
 	@Override

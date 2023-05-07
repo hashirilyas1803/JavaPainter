@@ -7,6 +7,9 @@ import java.awt.*;
 public class ToggleButton extends Button implements Interactibility {
     // Attributes
     int count;
+
+
+    // Methods
     public ToggleButton(int x, int y, int width, int height, Image i_depressed, Image i_pressed) {
         super(x, y, width, height, i_depressed, i_pressed);
     }
@@ -15,9 +18,8 @@ public class ToggleButton extends Button implements Interactibility {
         super(x, y, width, height);
     }
 
-    public void Unclick(int x, int y) {
-        current_image = image_depressed;
-        pressed = false;
+    public ToggleButton(int x, int y, int width, int height, String text) {
+        super(x, y, width, height);
     }
 
     @Override
